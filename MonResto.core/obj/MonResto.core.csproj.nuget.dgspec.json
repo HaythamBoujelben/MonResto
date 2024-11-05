@@ -1,24 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\ProjectAsp\\MonResto\\MonResto.core\\MonResto.core.csproj": {}
+    "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.core\\MonResto.core.csproj": {}
   },
   "projects": {
-    "C:\\ProjectAsp\\MonResto\\MonResto.core\\MonResto.core.csproj": {
+    "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.core\\MonResto.core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\ProjectAsp\\MonResto\\MonResto.core\\MonResto.core.csproj",
+        "projectUniqueName": "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.core\\MonResto.core.csproj",
         "projectName": "MonResto.core",
-        "projectPath": "C:\\ProjectAsp\\MonResto\\MonResto.core\\MonResto.core.csproj",
-        "packagesPath": "C:\\Users\\OnBotics03\\.nuget\\packages\\",
-        "outputPath": "C:\\ProjectAsp\\MonResto\\MonResto.core\\obj\\",
+        "projectPath": "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.core\\MonResto.core.csproj",
+        "packagesPath": "C:\\Users\\hayth\\.nuget\\packages\\",
+        "outputPath": "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\OnBotics03\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\hayth\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -45,6 +44,12 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -61,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

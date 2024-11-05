@@ -1,16 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using MonRestoAPI.Models;
+using System;
 
 namespace MonRestoAPI.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
+        
         private readonly MonRestoAPIContext _context;
         private IDbContextTransaction _transaction;
+
+        public IRepository<Article> Articles { get; private set; }
 
         public UnitOfWork(MonRestoAPIContext context)
         {
             _context = context;
+            Articles = new Repository<Article>(_context);
         }
 
         public async Task<int> SaveChangesAsync()
@@ -58,11 +63,6 @@ namespace MonRestoAPI.Repositories
         public void Dispose()
         {
             _context.Dispose();
-            if (_transaction != null)
-            {
-                _transaction.Dispose();
-                _transaction = null;
-            }
         }
 
     }

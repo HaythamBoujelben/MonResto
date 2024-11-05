@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "iEZXA27/4KvV6qSxEUdsDYYrFBb4gmhiuj0R3URyyXHRZnn6wx+qlsBgpFetZKiubxLBTK3TUgGtwZstU3+Xlg==",
+  "dgSpecHash": "9+o7+7i8Fx3sHNqEnc7JbRMHNs/YndhlAnnW4MYPFatM2XYx0UTu7iS/J7xR9Im88APXY97NlWlmKz8RSZwOWw==",
   "success": true,
-  "projectFilePath": "C:\\ProjectAsp\\MonResto\\MonResto.core\\MonResto.core.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.core\\MonResto.core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hayth\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
+    "C:\\Users\\hayth\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\hayth\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
+    "C:\\Users\\hayth\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "C:\\Users\\hayth\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

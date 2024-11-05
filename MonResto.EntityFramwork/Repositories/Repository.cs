@@ -12,14 +12,14 @@ namespace MonRestoAPI.Repositories
             _context = context;
         }
 
-        public Task AddAsync(T entity)
+        public async Task AddAsync(T entity)
         {
-            throw new NotImplementedException();
+            await _context.AddAsync(entity);
         }
 
         public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            _context.Set<T>().Remove(entity);
         }
 
         public IEnumerable<T> GetAll()
@@ -39,7 +39,7 @@ namespace MonRestoAPI.Repositories
 
         public void Update(T entity)
         {
-            throw new NotImplementedException();
+            _context.Set<T>().Update(entity);
         }
     }
 

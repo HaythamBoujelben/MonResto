@@ -158,3 +158,4 @@ C:\ProjectAsp\MonResto\MonRestoAPI\obj\Debug\net7.0\refint\MonResto.API.dll
 C:\ProjectAsp\MonResto\MonRestoAPI\obj\Debug\net7.0\MonResto.API.pdb
 C:\ProjectAsp\MonResto\MonRestoAPI\obj\Debug\net7.0\MonResto.API.genruntimeconfig.cache
 C:\ProjectAsp\MonResto\MonRestoAPI\obj\Debug\net7.0\ref\MonResto.API.dll
+D:\bouja\GDLC2\.net\ProjectAsp\MonRestoAPI\bin\Debug\net7.0\AutoMapper.dll

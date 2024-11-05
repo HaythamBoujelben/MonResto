@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'con' not found.");
 builder.Services.AddDbContext<MonRestoAPIContext>(x => x.UseSqlServer(connectionString));
+builder.Services.AddAutoMapper(typeof(Program)); // Add this line to register AutoMapper
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
