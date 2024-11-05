@@ -48,7 +48,7 @@ namespace MonResto.EntityFramework.Migrations
 
                     b.HasIndex("MenuId");
 
-                    b.ToTable("Articles");
+                    b.ToTable("Articles", (string)null);
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.Cart", b =>
@@ -64,7 +64,7 @@ namespace MonResto.EntityFramework.Migrations
 
                     b.HasKey("CartId");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.CartItem", b =>
@@ -93,7 +93,7 @@ namespace MonResto.EntityFramework.Migrations
 
                     b.HasIndex("CartId");
 
-                    b.ToTable("CartItem");
+                    b.ToTable("CartItem", (string)null);
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.Category", b =>
@@ -110,7 +110,7 @@ namespace MonResto.EntityFramework.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.Menu", b =>
@@ -127,7 +127,7 @@ namespace MonResto.EntityFramework.Migrations
 
                     b.HasKey("MenuId");
 
-                    b.ToTable("Menus");
+                    b.ToTable("Menus", (string)null);
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.Order", b =>
@@ -154,7 +154,7 @@ namespace MonResto.EntityFramework.Migrations
 
                     b.HasIndex("UserProfileUserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.OrderItem", b =>
@@ -183,7 +183,7 @@ namespace MonResto.EntityFramework.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("OrderItem", (string)null);
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.UserProfile", b =>
@@ -208,7 +208,7 @@ namespace MonResto.EntityFramework.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("UserProfiles");
+                    b.ToTable("UserProfiles", (string)null);
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.Article", b =>

@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.EntityFramwork\\MonResto.EntityFramework.csproj": {}
+    "C:\\ProjectAsp\\MonResto\\MonResto.EntityFramwork\\MonResto.EntityFramework.csproj": {}
   },
   "projects": {
-    "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.core\\MonResto.core.csproj": {
+    "C:\\ProjectAsp\\MonResto\\MonResto.core\\MonResto.core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.core\\MonResto.core.csproj",
+        "projectUniqueName": "C:\\ProjectAsp\\MonResto\\MonResto.core\\MonResto.core.csproj",
         "projectName": "MonResto.core",
-        "projectPath": "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.core\\MonResto.core.csproj",
-        "packagesPath": "C:\\Users\\hayth\\.nuget\\packages\\",
-        "outputPath": "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.core\\obj\\",
+        "projectPath": "C:\\ProjectAsp\\MonResto\\MonResto.core\\MonResto.core.csproj",
+        "packagesPath": "C:\\Users\\OnBotics03\\.nuget\\packages\\",
+        "outputPath": "C:\\ProjectAsp\\MonResto\\MonResto.core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\hayth\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\OnBotics03\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -60,24 +61,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.EntityFramwork\\MonResto.EntityFramework.csproj": {
+    "C:\\ProjectAsp\\MonResto\\MonResto.EntityFramwork\\MonResto.EntityFramework.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.EntityFramwork\\MonResto.EntityFramework.csproj",
+        "projectUniqueName": "C:\\ProjectAsp\\MonResto\\MonResto.EntityFramwork\\MonResto.EntityFramework.csproj",
         "projectName": "MonResto.EntityFramework",
-        "projectPath": "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.EntityFramwork\\MonResto.EntityFramework.csproj",
-        "packagesPath": "C:\\Users\\hayth\\.nuget\\packages\\",
-        "outputPath": "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.EntityFramwork\\obj\\",
+        "projectPath": "C:\\ProjectAsp\\MonResto\\MonResto.EntityFramwork\\MonResto.EntityFramework.csproj",
+        "packagesPath": "C:\\Users\\OnBotics03\\.nuget\\packages\\",
+        "outputPath": "C:\\ProjectAsp\\MonResto\\MonResto.EntityFramwork\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\hayth\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\OnBotics03\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -93,8 +95,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.core\\MonResto.core.csproj": {
-                "projectPath": "D:\\bouja\\GDLC2\\.net\\ProjectAsp\\MonResto.core\\MonResto.core.csproj"
+              "C:\\ProjectAsp\\MonResto\\MonResto.core\\MonResto.core.csproj": {
+                "projectPath": "C:\\ProjectAsp\\MonResto\\MonResto.core\\MonResto.core.csproj"
               }
             }
           }
@@ -140,7 +142,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
