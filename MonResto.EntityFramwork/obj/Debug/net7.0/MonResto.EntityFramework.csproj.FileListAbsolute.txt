@@ -1,0 +1,17 @@
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\bin\Debug\net7.0\MonResto.EntityFramework.deps.json
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\bin\Debug\net7.0\MonResto.EntityFramework.runtimeconfig.json
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\bin\Debug\net7.0\MonResto.EntityFramework.dll
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\bin\Debug\net7.0\MonResto.EntityFramework.pdb
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\bin\Debug\net7.0\MonResto.core.dll
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\bin\Debug\net7.0\MonResto.core.pdb
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\obj\Debug\net7.0\MonResto.EntityFramework.csproj.AssemblyReference.cache
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\obj\Debug\net7.0\MonResto.EntityFramework.GeneratedMSBuildEditorConfig.editorconfig
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\obj\Debug\net7.0\MonResto.EntityFramework.AssemblyInfoInputs.cache
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\obj\Debug\net7.0\MonResto.EntityFramework.AssemblyInfo.cs
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\obj\Debug\net7.0\MonResto.EntityFramework.csproj.CoreCompileInputs.cache
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\obj\Debug\net7.0\MonResto.EntityFramework.csproj.CopyComplete
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\obj\Debug\net7.0\MonResto.EntityFramework.dll
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\obj\Debug\net7.0\refint\MonResto.EntityFramework.dll
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\obj\Debug\net7.0\MonResto.EntityFramework.pdb
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\obj\Debug\net7.0\MonResto.EntityFramework.genruntimeconfig.cache
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.EntityFramwork\obj\Debug\net7.0\ref\MonResto.EntityFramework.dll

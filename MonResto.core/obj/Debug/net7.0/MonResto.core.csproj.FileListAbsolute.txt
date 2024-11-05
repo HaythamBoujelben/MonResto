@@ -1,0 +1,12 @@
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.core\bin\Debug\net7.0\MonResto.core.deps.json
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.core\bin\Debug\net7.0\MonResto.core.dll
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.core\bin\Debug\net7.0\MonResto.core.pdb
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.core\obj\Debug\net7.0\MonResto.core.csproj.AssemblyReference.cache
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.core\obj\Debug\net7.0\MonResto.core.GeneratedMSBuildEditorConfig.editorconfig
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.core\obj\Debug\net7.0\MonResto.core.AssemblyInfoInputs.cache
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.core\obj\Debug\net7.0\MonResto.core.AssemblyInfo.cs
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.core\obj\Debug\net7.0\MonResto.core.csproj.CoreCompileInputs.cache
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.core\obj\Debug\net7.0\MonResto.core.dll
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.core\obj\Debug\net7.0\refint\MonResto.core.dll
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.core\obj\Debug\net7.0\MonResto.core.pdb
+D:\bouja\GDLC2\.net\ProjectAsp\MonResto.core\obj\Debug\net7.0\ref\MonResto.core.dll
