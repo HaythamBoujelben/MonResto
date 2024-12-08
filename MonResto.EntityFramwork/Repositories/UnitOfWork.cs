@@ -11,11 +11,25 @@ namespace MonRestoAPI.Repositories
         private IDbContextTransaction _transaction;
 
         public IRepository<Article> Articles { get; private set; }
+        public IRepository<UserProfile> UserProfiles { get; private set; }
+        public IRepository<Cart> Carts { get; private set; }
+        public IRepository<CartItem> CartItems { get; private set; }
+        public IRepository<Order> Orders { get; private set; }
+        public IRepository<OrderItem> OrderItems { get; private set; }
+        public IRepository<Menu> Menus { get; private set; }
+        public IRepository<Category> Categorys { get; private set; }
 
         public UnitOfWork(MonRestoAPIContext context)
         {
             _context = context;
             Articles = new Repository<Article>(_context);
+            UserProfiles = new Repository<UserProfile>(_context);
+            Carts = new Repository<Cart>(_context);
+            CartItems = new Repository<CartItem>(_context);
+            Orders = new Repository<Order>(_context);
+            OrderItems = new Repository<OrderItem>(_context);
+            Menus = new Repository<Menu>(_context);
+            Categorys = new Repository<Category>(_context);
         }
 
         public async Task<int> SaveChangesAsync()
