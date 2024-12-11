@@ -15,7 +15,7 @@ namespace MonResto.core
         public MappingProfile()
         {
             CreateMap<ArticleDto, Article>();
-            CreateMap<UserProfile, UserProfileDto>();
+            CreateMap<UserProfileDto ,UserProfile>();
             CreateMap<CartItemDto, CartItem>();
             CreateMap<MenuDto, Menu>();
             CreateMap<OrderDto, Order>();

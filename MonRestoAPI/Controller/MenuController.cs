@@ -23,9 +23,8 @@ namespace MonResto.API.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var menus = await _unitOfWork.Menus.GetAllAsync();
-            var menuDtos = _mapper.Map<List<MenuDto>>(menus);
-            return Ok(menuDtos);
+            var menus = _unitOfWork.Menus.GetAll().ToList();
+            return Ok(menus);
         }
 
         // Get Menu by ID
@@ -37,9 +36,7 @@ namespace MonResto.API.Controllers
             {
                 return NotFound($"Menu with ID {menuId} not found.");
             }
-
-            var menuDto = _mapper.Map<MenuDto>(menu);
-            return Ok(menuDto);
+            return Ok(menu);
         }
 
         // Create Menu
@@ -58,29 +55,18 @@ namespace MonResto.API.Controllers
             await _unitOfWork.Menus.AddAsync(newMenu);
             await _unitOfWork.SaveChangesAsync();
 
-            // Add Articles to the Menu
-            foreach (var articleDto in menuDto.Articles)
-            {
-                var article = await _unitOfWork.Articles.GetByIdAsync(articleDto.ArticleId);
-                if (article != null)
-                {
-                    article.MenuId = newMenu.MenuId;
-                    _unitOfWork.Articles.Update(article);
-                }
-            }
-            await _unitOfWork.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetByIdAsync), new { menuId = newMenu.MenuId }, newMenu);
+            return Ok(newMenu);
         }
 
         // Update Menu
-        [HttpPut("Update/{menuId}")]
-        public async Task<IActionResult> Update(int menuId, MenuDto menuDto)
+        [HttpPut("Update/{Id}")]
+        public async Task<IActionResult> Update(int Id, MenuDto menuDto)
         {
-            var existingMenu = await _unitOfWork.Menus.GetByIdAsync(menuId);
+            var existingMenu = await _unitOfWork.Menus.GetByIdAsync(Id);
             if (existingMenu == null)
             {
-                return NotFound($"Menu with ID {menuId} not found.");
+                return NotFound($"Menu with ID {Id} not found.");
             }
 
             // Map updated data from MenuDto to Menu entity
@@ -88,33 +74,21 @@ namespace MonResto.API.Controllers
             _unitOfWork.Menus.Update(existingMenu);
             await _unitOfWork.SaveChangesAsync();
 
-            // Update Articles associated with the Menu
-            foreach (var articleDto in menuDto.Articles)
-            {
-                var article = await _unitOfWork.Articles.GetByIdAsync(articleDto.ArticleId);
-                if (article != null)
-                {
-                    article.MenuId = existingMenu.MenuId;
-                    _unitOfWork.Articles.Update(article);
-                }
-            }
-
-            await _unitOfWork.SaveChangesAsync();
             return Ok(existingMenu);
         }
 
         // Delete Menu
-        [HttpDelete("Delete/{menuId}")]
-        public async Task<IActionResult> Delete(int menuId)
+        [HttpDelete("Delete/{Id}")]
+        public async Task<IActionResult> Delete(int Id)
         {
-            var menu = await _unitOfWork.Menus.GetByIdAsync(menuId);
+            var menu = await _unitOfWork.Menus.GetByIdAsync(Id);
             if (menu == null)
             {
-                return NotFound($"Menu with ID {menuId} not found.");
+                return NotFound($"Menu with ID {Id} not found.");
             }
 
             // Delete Articles from this Menu
-            var articles = _unitOfWork.Articles.GetAll().Where(x => x.MenuId == menuId);
+            var articles = _unitOfWork.Articles.GetAll().Where(x => x.MenuId == Id);
             foreach (var article in articles)
             {
                 article.MenuId = null; 

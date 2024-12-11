@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MonResto.API.Dto;
 using MonRestoAPI.Models;
@@ -23,8 +24,11 @@ namespace MonRestoAPI.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var articles = await _unitOfWork.Articles.GetAllAsync();
-            return Ok(articles);  // return 200 OK with the list of articles
+            var articles =  _unitOfWork.Articles
+                .Include(e => e.Menu)
+                .Include(e => e.Category)
+                .GetAll().ToList();
+            return Ok(articles); 
         }
 
         // Get an article by its ID
@@ -34,21 +38,21 @@ namespace MonRestoAPI.Controllers
             var article = await _unitOfWork.Articles.GetByIdAsync(id);
             if (article == null)
             {
-                return NotFound();  // return 404 if the article is not found
+                return NotFound();  
             }
-            return Ok(article);  // return 200 OK with the article data
+            return Ok(article); 
         }
 
         // Get an article by name
         [HttpGet("GetByName")]
         public IActionResult GetByName(string name)
         {
-            var article = _unitOfWork.Articles.Find(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            var article = _unitOfWork.Articles.Find(x => x.Name.Equals(name));
             if (article == null)
             {
-                return NotFound("Article not found with the provided name.");  // return 404 if not found
+                return NotFound("Article not found with the provided name."); 
             }
-            return Ok(article);  // return 200 OK with the article data
+            return Ok(article);  
         }
 
         // Create a new article
@@ -56,10 +60,10 @@ namespace MonRestoAPI.Controllers
         public async Task<IActionResult> Create([FromBody] ArticleDto artDto)
         {
             // Check if the article already exists
-            var existingArticle = _unitOfWork.Articles.Find(x => x.Name.Equals(artDto.Name, StringComparison.OrdinalIgnoreCase));
+            var existingArticle = _unitOfWork.Articles.Find(x => x.Name.Equals(artDto.Name));
             if (existingArticle != null)
             {
-                return Conflict("An article with this name already exists.");  // return 409 Conflict if article already exists
+                return Conflict("An article with this name already exists.");  
             }
 
             // Map DTO to model and add to the repository
@@ -67,7 +71,7 @@ namespace MonRestoAPI.Controllers
             await _unitOfWork.Articles.AddAsync(newArticle);
             await _unitOfWork.SaveChangesAsync();  // save changes
 
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = newArticle.ArticleId }, newArticle);  // return 201 Created with the new article
+            return Ok(newArticle);
         }
 
         // Update article
@@ -80,10 +84,8 @@ namespace MonRestoAPI.Controllers
                 return NotFound($"Article with ID {id} not found.");
             }
 
-            // Update fields (or map all fields, depending on your scenario)
             _mapper.Map(articleDto, existingArticle);
 
-            // Save changes
             _unitOfWork.Articles.Update(existingArticle);
             await _unitOfWork.SaveChangesAsync();
 
@@ -97,13 +99,13 @@ namespace MonRestoAPI.Controllers
             var article = await _unitOfWork.Articles.GetByIdAsync(id);
             if (article == null)
             {
-                return NotFound("Article not found.");  // return 404 if article doesn't exist
+                return NotFound("Article not found.");  
             }
 
             _unitOfWork.Articles.Delete(article);
-            await _unitOfWork.SaveChangesAsync();  // commit changes
+            await _unitOfWork.SaveChangesAsync();  
 
-            return NoContent();  // return 204 No Content as the deletion is successful
+            return NoContent();  
         }
     }
 }

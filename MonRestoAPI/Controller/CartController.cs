@@ -27,7 +27,7 @@ public class CartController : ControllerBase
             return NotFound($"Cart for user ID {userId} not found.");
         }
 
-        var cartItems = await _unitOfWork.CartItems.FindAsync(x => x.CartId == cart.CartId);
+        var cartItems = await _unitOfWork.CartItems.FindAsync(x => x.CartId == cart.Id);
         var cartItemDtos = _mapper.Map<List<CartItemDto>>(cartItems);
         return Ok(cartItemDtos);
     }
@@ -53,7 +53,7 @@ public class CartController : ControllerBase
         }
 
         // Check if the item already exists in the cart
-        var existingCartItem = await _unitOfWork.CartItems.FindAsync(x => x.CartId == cart.CartId && x.ArticleId == cartItemDto.ArticleId);
+        var existingCartItem = await _unitOfWork.CartItems.FindAsync(x => x.CartId == cart.Id && x.ArticleId == cartItemDto.ArticleId);
         if (existingCartItem != null)
         {
             existingCartItem.Quantity += cartItemDto.Quantity;
@@ -62,7 +62,7 @@ public class CartController : ControllerBase
         else
         {
             var newCartItem = _mapper.Map<CartItem>(cartItemDto);
-            newCartItem.CartId = cart.CartId;
+            newCartItem.CartId = cart.Id;
             await _unitOfWork.CartItems.AddAsync(newCartItem);
         }
 
@@ -80,7 +80,7 @@ public class CartController : ControllerBase
             return NotFound($"Cart for user ID {userId} not found.");
         }
 
-        var cartItems = _unitOfWork.CartItems.GetAll().Where(x => x.CartId == cart.CartId);
+        var cartItems = _unitOfWork.CartItems.GetAll().Where(x => x.CartId == cart.Id);
         foreach (var item in cartItems)
         {
             _unitOfWork.CartItems.Delete(item);

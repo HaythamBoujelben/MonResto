@@ -68,7 +68,7 @@ public class OrderItemController : ControllerBase
         await _unitOfWork.OrderItems.AddAsync(newOrderItem);
         await _unitOfWork.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetOrderItemById), new { id = newOrderItem.OrderItemId }, newOrderItem);
+        return CreatedAtAction(nameof(GetOrderItemById), new { id = newOrderItem.Id }, newOrderItem);
     }
 
     // Update OrderItem (e.g., updating the quantity)

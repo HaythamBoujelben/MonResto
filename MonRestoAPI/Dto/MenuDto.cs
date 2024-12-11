@@ -6,7 +6,6 @@ namespace MonResto.API.Dto
     {
         public int MenuId { get; set; }
         public string Name { get; set; }
-        public List<ArticleDto> Articles { get; set; }
     }
 
 

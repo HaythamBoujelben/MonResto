@@ -84,7 +84,7 @@ namespace MonResto.API.Controllers
             {
                 var newOrderItem = new OrderItem
                 {
-                    OrderId = newOrder.OrderId,
+                    OrderId = newOrder.Id,
                     ArticleId = itemDto.ArticleId,
                     Quantity = itemDto.Quantity,
                     Price = itemDto.Price // You may use the price passed or retrieve it from the article
@@ -94,7 +94,7 @@ namespace MonResto.API.Controllers
 
             await _unitOfWork.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetByIdAsync), new { orderId = newOrder.OrderId }, newOrder);
+            return CreatedAtAction(nameof(GetByIdAsync), new { orderId = newOrder.Id }, newOrder);
         }
 
         // Update Order (e.g., change status)

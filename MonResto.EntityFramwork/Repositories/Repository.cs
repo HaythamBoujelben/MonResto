@@ -1,54 +1,52 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MonRestoAPI.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly MonRestoAPIContext _context;
+        private IQueryable<T> _query;
 
         public Repository(MonRestoAPIContext context)
         {
             _context = context;
+            _query = _context.Set<T>();
         }
 
-        // Add an entity to the database asynchronously
         public async Task AddAsync(T entity)
         {
             await _context.AddAsync(entity);
         }
 
-        // Delete an entity from the database
         public void Delete(T entity)
         {
             _context.Set<T>().Remove(entity);
         }
 
-        // Get all entities from the database
         public IEnumerable<T> GetAll()
         {
+            var result = _query.ToList();
+            _query = _context.Set<T>();
             return _context.Set<T>().ToList();
         }
 
-        // Get an entity by its ID asynchronously
         public async Task<T> GetByIdAsync(int id)
         {
             return await _context.Set<T>().FindAsync(id);
         }
 
-        // Find an entity using a predicate (synchronous)
         public T Find(Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>().FirstOrDefault(predicate);
         }
 
-        // Find an entity using a predicate (asynchronous)
         public async Task<T> FindAsync(Expression<Func<T, bool>> predicate)
         {
             return await _context.Set<T>().FirstOrDefaultAsync(predicate);
         }
 
-        // Update an entity in the database
         public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
@@ -57,6 +55,11 @@ namespace MonRestoAPI.Repositories
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
+        }
+        public IRepository<T> Include(Expression<Func<T, object>> navigationProperty)
+        {
+            _query = _query.Include(navigationProperty);
+            return this;
         }
     }
 }

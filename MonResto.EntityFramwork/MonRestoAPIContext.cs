@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MonRestoAPI.Models;
 
-public class MonRestoAPIContext : DbContext
+public class MonRestoAPIContext : IdentityDbContext<IdentityUser>
 {
     public MonRestoAPIContext(DbContextOptions<MonRestoAPIContext> options) : base(options) { }
 

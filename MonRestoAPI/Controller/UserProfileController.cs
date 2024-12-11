@@ -23,9 +23,8 @@ namespace MonResto.API.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var userProfiles = await _unitOfWork.UserProfiles.GetAllAsync();
-            var userProfileDtos = _mapper.Map<List<UserProfileDto>>(userProfiles);
-            return Ok(userProfileDtos);
+            var userProfiles =  _unitOfWork.UserProfiles.GetAll().ToList();
+            return Ok(userProfiles);
         }
 
         // Get User Profile by ID
@@ -35,11 +34,9 @@ namespace MonResto.API.Controllers
             var userProfile = await _unitOfWork.UserProfiles.GetByIdAsync(id);
             if (userProfile == null)
             {
-                return NotFound($"User Profile with ID {id} not found.");
+                return NotFound();
             }
-
-            var userProfileDto = _mapper.Map<UserProfileDto>(userProfile);
-            return Ok(userProfileDto);
+            return Ok(userProfile);
         }
 
         // Get User Profile by Email
@@ -51,9 +48,7 @@ namespace MonResto.API.Controllers
             {
                 return NotFound($"User Profile with Email {email} not found.");
             }
-
-            var userProfileDto = _mapper.Map<UserProfileDto>(userProfile);
-            return Ok(userProfileDto);
+            return Ok(userProfile);
         }
 
         // Create User Profile

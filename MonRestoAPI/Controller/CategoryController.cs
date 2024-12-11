@@ -23,28 +23,20 @@ namespace MonResto.API.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var categories = await _unitOfWork.Categorys.GetAllAsync();
-            if (categories == null || !categories.Any())
-            {
-                return NotFound("No categories found.");
-            }
-
-            var categoryDtos = _mapper.Map<List<CategoryDto>>(categories);
-            return Ok(categoryDtos);
+            var categories = _unitOfWork.Categorys.GetAll().ToList();
+            return Ok(categories);
         }
 
         // Get Category by ID
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var category = await _unitOfWork.Categorys.GetByIdAsync(id);
-            if (category == null)
+            var categorie = await _unitOfWork.Categorys.GetByIdAsync(id);
+            if (categorie == null)
             {
-                return NotFound($"Category with ID {id} not found.");
+                return NotFound();
             }
-
-            var categoryDto = _mapper.Map<CategoryDto>(category);
-            return Ok(categoryDto);
+            return Ok(categorie);
         }
 
         // Create a new Category
@@ -65,7 +57,7 @@ namespace MonResto.API.Controllers
             await _unitOfWork.Categorys.AddAsync(newCategory);
             await _unitOfWork.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = newCategory.CategoryId }, newCategory);
+            return CreatedAtAction(nameof(GetById), new { id = newCategory.Id }, newCategory);
         }
 
         // Update a Category

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MonResto.EntityFramework.Migrations
 {
     [DbContext(typeof(MonRestoAPIContext))]
-    [Migration("20241207173558_InitialCreate2")]
-    partial class InitialCreate2
+    [Migration("20241210133031_Initial_001")]
+    partial class Initial001
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,14 +26,18 @@ namespace MonResto.EntityFramework.Migrations
 
             modelBuilder.Entity("MonRestoAPI.Models.Article", b =>
                 {
-                    b.Property<int>("ArticleId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArticleId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("MenuId")
                         .HasColumnType("int");
@@ -45,7 +49,7 @@ namespace MonResto.EntityFramework.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("ArticleId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
@@ -56,34 +60,37 @@ namespace MonResto.EntityFramework.Migrations
 
             modelBuilder.Entity("MonRestoAPI.Models.Cart", b =>
                 {
-                    b.Property<int>("CartId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("CartId");
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("UserId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserProfileId");
 
                     b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.CartItem", b =>
                 {
-                    b.Property<int>("CartItemId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ArticleId")
+                    b.Property<int?>("ArticleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CartId")
+                    b.Property<int?>("CartId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -92,7 +99,7 @@ namespace MonResto.EntityFramework.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("CartItemId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
 
@@ -103,45 +110,45 @@ namespace MonResto.EntityFramework.Migrations
 
             modelBuilder.Entity("MonRestoAPI.Models.Category", b =>
                 {
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CategoryId");
+                    b.HasKey("Id");
 
                     b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.Menu", b =>
                 {
-                    b.Property<int>("MenuId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MenuId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("MenuId");
+                    b.HasKey("Id");
 
                     b.ToTable("Menus");
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.Order", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
@@ -149,31 +156,31 @@ namespace MonResto.EntityFramework.Migrations
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserProfileUserId")
+                    b.Property<int>("UserProfileId")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("UserProfileUserId");
+                    b.HasIndex("UserProfileId");
 
                     b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.OrderItem", b =>
                 {
-                    b.Property<int>("OrderItemId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderItemId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ArticleId")
+                    b.Property<int?>("ArticleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -182,7 +189,7 @@ namespace MonResto.EntityFramework.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderItemId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
 
@@ -193,11 +200,11 @@ namespace MonResto.EntityFramework.Migrations
 
             modelBuilder.Entity("MonRestoAPI.Models.UserProfile", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -211,7 +218,7 @@ namespace MonResto.EntityFramework.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("UserProfiles");
                 });
@@ -233,28 +240,24 @@ namespace MonResto.EntityFramework.Migrations
 
             modelBuilder.Entity("MonRestoAPI.Models.Cart", b =>
                 {
-                    b.HasOne("MonRestoAPI.Models.UserProfile", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                    b.HasOne("MonRestoAPI.Models.UserProfile", "UserProfile")
+                        .WithMany("Carts")
+                        .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("UserProfile");
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.CartItem", b =>
                 {
                     b.HasOne("MonRestoAPI.Models.Article", "Article")
-                        .WithMany()
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("CartItems")
+                        .HasForeignKey("ArticleId");
 
                     b.HasOne("MonRestoAPI.Models.Cart", "Cart")
                         .WithMany("CartItems")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CartId");
 
                     b.Navigation("Article");
 
@@ -263,28 +266,35 @@ namespace MonResto.EntityFramework.Migrations
 
             modelBuilder.Entity("MonRestoAPI.Models.Order", b =>
                 {
-                    b.HasOne("MonRestoAPI.Models.UserProfile", null)
-                        .WithMany("OrderHistory")
-                        .HasForeignKey("UserProfileUserId");
+                    b.HasOne("MonRestoAPI.Models.UserProfile", "UserProfile")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.OrderItem", b =>
                 {
                     b.HasOne("MonRestoAPI.Models.Article", "Article")
-                        .WithMany()
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("OrderItems")
+                        .HasForeignKey("ArticleId");
 
                     b.HasOne("MonRestoAPI.Models.Order", "Order")
                         .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.Navigation("Article");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("MonRestoAPI.Models.Article", b =>
+                {
+                    b.Navigation("CartItems");
+
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("MonRestoAPI.Models.Cart", b =>
@@ -309,7 +319,9 @@ namespace MonResto.EntityFramework.Migrations
 
             modelBuilder.Entity("MonRestoAPI.Models.UserProfile", b =>
                 {
-                    b.Navigation("OrderHistory");
+                    b.Navigation("Carts");
+
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
