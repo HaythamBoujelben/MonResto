@@ -63,16 +63,21 @@ namespace MonRestoAPI.Controllers
             var existingArticle = _unitOfWork.Articles.Find(x => x.Name.Equals(artDto.Name));
             if (existingArticle != null)
             {
-                return Conflict("An article with this name already exists.");  
+                return Conflict(new { Message = "An article with this name already exists." });
             }
 
-            // Map DTO to model and add to the repository
-            var newArticle = _mapper.Map<Article>(artDto);
-            await _unitOfWork.Articles.AddAsync(newArticle);
-            await _unitOfWork.SaveChangesAsync();  // save changes
 
-            return Ok(newArticle);
+            // Map DTO to model
+            var newArticle = _mapper.Map<Article>(artDto);
+
+            // Add and save changes
+            await _unitOfWork.Articles.AddAsync(newArticle);
+            await _unitOfWork.SaveChangesAsync();
+
+            // Return the created article
+            return CreatedAtAction(nameof(Create), new { id = newArticle.Id }, newArticle);
         }
+
 
         // Update article
         [HttpPut("Update/{id}")]

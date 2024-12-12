@@ -21,7 +21,7 @@ public class CartController : ControllerBase
     [HttpGet("GetByUserId/{userId}")]
     public async Task<IActionResult> GetCartByUserId(int userId)
     {
-        var cart = await _unitOfWork.Carts.FindAsync(x => x.UserId == userId);
+        var cart = await _unitOfWork.Carts.FindAsync(x => x.UserProfileId == userId);
         if (cart == null)
         {
             return NotFound($"Cart for user ID {userId} not found.");
@@ -44,10 +44,10 @@ public class CartController : ControllerBase
         }
 
         // Find or create the user's cart
-        var cart = await _unitOfWork.Carts.FindAsync(x => x.UserId == cartItemDto.UserId);
+        var cart = await _unitOfWork.Carts.FindAsync(x => x.UserProfileId == cartItemDto.UserId);
         if (cart == null)
         {
-            cart = new Cart { UserId = cartItemDto.UserId };
+            cart = new Cart { UserProfileId = cartItemDto.UserId };
             await _unitOfWork.Carts.AddAsync(cart);
             await _unitOfWork.SaveChangesAsync();
         }
@@ -74,7 +74,7 @@ public class CartController : ControllerBase
     [HttpDelete("ClearCart/{userId}")]
     public async Task<IActionResult> ClearCart(int userId)
     {
-        var cart = await _unitOfWork.Carts.FindAsync(x => x.UserId == userId);
+        var cart = await _unitOfWork.Carts.FindAsync(x => x.UserProfileId == userId);
         if (cart == null)
         {
             return NotFound($"Cart for user ID {userId} not found.");

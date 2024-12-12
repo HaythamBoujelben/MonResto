@@ -10,8 +10,6 @@ namespace MonRestoAPI.Models
         public string LastName { get; set; }
         public string Email { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
-        public ICollection<Cart> Carts { get; set; }
     }
 
 }

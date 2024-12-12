@@ -19,18 +19,13 @@ namespace MonResto.API.Controllers
             _mapper = mapper;
         }
 
-        // Get Orders by User (by UserProfile ID)
-        [HttpGet("GetByUser/{userId}")]
-        public async Task<IActionResult> GetByUserAsync(int userId)
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
         {
-            var orders = await _unitOfWork.Orders.FindAsync(x => x.UserId == userId);
-            if (orders == null)
-            {
-                return NotFound($"No orders found for User with ID {userId}.");
-            }
-
-            var orderDtos = _mapper.Map<List<OrderDto>>(orders);
-            return Ok(orderDtos);
+            var orders =  _unitOfWork.Orders
+                .Include(x => x.UserProfile)
+                .GetAll().ToList();
+            return Ok(orders);
         }
 
         // Get Order by ID
@@ -43,8 +38,7 @@ namespace MonResto.API.Controllers
                 return NotFound($"Order with ID {orderId} not found.");
             }
 
-            var orderDto = _mapper.Map<OrderDto>(order);
-            return Ok(orderDto);
+            return Ok(order);
         }
 
         // Create a New Order (finalizing the cart)
@@ -58,53 +52,22 @@ namespace MonResto.API.Controllers
                 return BadRequest("User Profile not found.");
             }
 
-            // Calculate the total amount of the order (assuming you can get this info)
-            decimal totalAmount = 0;
-            foreach (var itemDto in orderDto.OrderItems)
-            {
-                var article = await _unitOfWork.Articles.GetByIdAsync(itemDto.ArticleId);
-                if (article == null)
-                {
-                    return BadRequest($"Article with ID {itemDto.ArticleId} not found.");
-                }
-                totalAmount += article.Price * itemDto.Quantity;
-            }
-
-            // Map the OrderDto to the Order entity
             var newOrder = _mapper.Map<Order>(orderDto);
-            newOrder.TotalPrice = totalAmount;
-            newOrder.OrderDate = DateTime.UtcNow;
-
-            // Add order to the repository and save changes
             await _unitOfWork.Orders.AddAsync(newOrder);
             await _unitOfWork.SaveChangesAsync();
 
-            // Add the order items
-            foreach (var itemDto in orderDto.OrderItems)
-            {
-                var newOrderItem = new OrderItem
-                {
-                    OrderId = newOrder.Id,
-                    ArticleId = itemDto.ArticleId,
-                    Quantity = itemDto.Quantity,
-                    Price = itemDto.Price // You may use the price passed or retrieve it from the article
-                };
-                await _unitOfWork.OrderItems.AddAsync(newOrderItem);
-            }
 
-            await _unitOfWork.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetByIdAsync), new { orderId = newOrder.Id }, newOrder);
+            return Ok(newOrder);
         }
 
         // Update Order (e.g., change status)
-        [HttpPut("Update/{orderId}")]
-        public async Task<IActionResult> Update(int orderId, OrderDto orderDto)
+        [HttpPut("Update/{Id}")]
+        public async Task<IActionResult> Update(int Id, OrderDto orderDto)
         {
-            var existingOrder = await _unitOfWork.Orders.GetByIdAsync(orderId);
+            var existingOrder = await _unitOfWork.Orders.GetByIdAsync(Id);
             if (existingOrder == null)
             {
-                return NotFound($"Order with ID {orderId} not found.");
+                return NotFound($"Order with ID {Id} not found.");
             }
 
             // Update Order fields (for example, status)
@@ -116,18 +79,18 @@ namespace MonResto.API.Controllers
         }
 
         // Delete Order (cancel or remove)
-        [HttpDelete("Delete/{orderId}")]
-        public async Task<IActionResult> Delete(int orderId)
+        [HttpDelete("Delete/{Id}")]
+        public async Task<IActionResult> Delete(int Id)
         {
-            var order = await _unitOfWork.Orders.GetByIdAsync(orderId);
+            var order = await _unitOfWork.Orders.GetByIdAsync(Id);
             if (order == null)
             {
-                return NotFound($"Order with ID {orderId} not found.");
+                return NotFound($"Order with ID {Id} not found.");
             }
 
             // Remove order and order items
             _unitOfWork.Orders.Delete(order);
-            var orderItems = _unitOfWork.OrderItems.GetAll().Where(x => x.OrderId == orderId).ToList();
+            var orderItems = _unitOfWork.OrderItems.GetAll().Where(x => x.OrderId == Id).ToList();
             foreach (var item in orderItems)
             {
                 _unitOfWork.OrderItems.Delete(item);

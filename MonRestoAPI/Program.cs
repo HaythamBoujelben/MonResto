@@ -76,6 +76,18 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173") // Add the client URL here
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+
 //builder.Services.AddControllers()
 //    .AddJsonOptions(options =>
 //    {
@@ -91,6 +103,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowSpecificOrigins");
 
 // Enable Authentication & Authorization Middleware
 app.UseAuthentication();
