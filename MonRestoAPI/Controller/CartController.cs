@@ -17,76 +17,63 @@ public class CartController : ControllerBase
         _mapper = mapper;
     }
 
-    // Get Cart by User ID
-    [HttpGet("GetByUserId/{userId}")]
-    public async Task<IActionResult> GetCartByUserId(int userId)
+    [HttpPost("create")]
+    public async Task<IActionResult> AddCart()
     {
-        var cart = await _unitOfWork.Carts.FindAsync(x => x.UserProfileId == userId);
-        if (cart == null)
-        {
-            return NotFound($"Cart for user ID {userId} not found.");
-        }
+        var cart = new Cart();
+        await _unitOfWork.Carts.AddAsync(cart);
+        await _unitOfWork.SaveChangesAsync();
 
-        var cartItems = await _unitOfWork.CartItems.FindAsync(x => x.CartId == cart.Id);
-        var cartItemDtos = _mapper.Map<List<CartItemDto>>(cartItems);
-        return Ok(cartItemDtos);
+        return Ok(cart);
     }
 
-    // Create or Update Cart (Add Item to Cart)
-    [HttpPost("AddItem")]
-    public async Task<IActionResult> AddItem(CartItemDto cartItemDto)
+    // Retrieve a Cart by its ID
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetCartById(int id)
     {
-        // Ensure the user exists
-        var user = await _unitOfWork.UserProfiles.GetByIdAsync(cartItemDto.UserId);
-        if (user == null)
-        {
-            return NotFound($"User with ID {cartItemDto.UserId} not found.");
-        }
-
-        // Find or create the user's cart
-        var cart = await _unitOfWork.Carts.FindAsync(x => x.UserProfileId == cartItemDto.UserId);
+        var cart = await _unitOfWork.Carts.GetByIdAsync(id);
         if (cart == null)
         {
-            cart = new Cart { UserProfileId = cartItemDto.UserId };
-            await _unitOfWork.Carts.AddAsync(cart);
-            await _unitOfWork.SaveChangesAsync();
+            return NotFound("Cart not found.");
         }
 
-        // Check if the item already exists in the cart
-        var existingCartItem = await _unitOfWork.CartItems.FindAsync(x => x.CartId == cart.Id && x.ArticleId == cartItemDto.ArticleId);
-        if (existingCartItem != null)
-        {
-            existingCartItem.Quantity += cartItemDto.Quantity;
-            _unitOfWork.CartItems.Update(existingCartItem);
-        }
-        else
-        {
-            var newCartItem = _mapper.Map<CartItem>(cartItemDto);
-            newCartItem.CartId = cart.Id;
-            await _unitOfWork.CartItems.AddAsync(newCartItem);
-        }
-
-        await _unitOfWork.SaveChangesAsync();
-        return Ok();
+        return Ok(cart);
     }
 
-    // Clear all items from the user's cart
-    [HttpDelete("ClearCart/{userId}")]
-    public async Task<IActionResult> ClearCart(int userId)
+    // Add a CartItem to a Cart
+    [HttpPost("{cartId}/items")]
+    public async Task<IActionResult> CreateCartItem(int cartId, [FromBody] CartItemDto cartItemDto)
     {
-        var cart = await _unitOfWork.Carts.FindAsync(x => x.UserProfileId == userId);
+        // Validate the input DTO
+        if (cartItemDto == null || cartItemDto.ArticleId <= 0 || cartItemDto.Quantity <= 0)
+        {
+            return BadRequest("Invalid CartItem data.");
+        }
+
+        // Check if the Cart exists
+        var cart = await _unitOfWork.Carts.GetByIdAsync(cartId);
         if (cart == null)
         {
-            return NotFound($"Cart for user ID {userId} not found.");
+            return NotFound("Cart not found.");
         }
 
-        var cartItems = _unitOfWork.CartItems.GetAll().Where(x => x.CartId == cart.Id);
-        foreach (var item in cartItems)
+        // Check if the Article exists
+        var article = await _unitOfWork.Articles.GetByIdAsync(cartItemDto.ArticleId);
+        if (article == null)
         {
-            _unitOfWork.CartItems.Delete(item);
+            return NotFound("Article not found.");
         }
 
+        // Create a new CartItem
+        var cartItem = _mapper.Map<CartItem>(cartItemDto);
+        cartItem.CartId = cartId;
+        cartItem.Price = article.Price; // Set the price from the Article entity
+
+        await _unitOfWork.CartItems.AddAsync(cartItem);
         await _unitOfWork.SaveChangesAsync();
-        return Ok($"Cart cleared for user ID {userId}.");
+
+        // Return the created CartItem as a response
+        var resultDto = _mapper.Map<CartItemDto>(cartItem);
+        return CreatedAtAction(nameof(GetCartById), new { id = cartItem.Id }, resultDto);
     }
 }

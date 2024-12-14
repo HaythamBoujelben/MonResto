@@ -11,7 +11,6 @@ namespace MonRestoAPI.Repositories
         T Find(Expression<Func<T, bool>> predicate);
         Task<T> FindAsync(Expression<Func<T, bool>> predicate);
         void Update(T entity);
-        Task<IEnumerable<T>> GetAllAsync();
         IRepository<T> Include(Expression<Func<T, object>> navigationProperty);
     }
 
