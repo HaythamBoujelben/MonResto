@@ -12,5 +12,6 @@ public class MonRestoAPIContext : IdentityDbContext<IdentityUser>
     public DbSet<Menu> Menus { get; set; }
     public DbSet<Cart> Carts { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; } 
     public DbSet<UserProfile> UserProfiles { get; set; }
 }

@@ -96,5 +96,18 @@ namespace MonResto.API.Controllers
 
             return Ok();
         }
+
+        [HttpGet("GetArticlesByCategoryId/{categoryId}")]
+        public async Task<IActionResult> GetArticlesByCategoryId(int categoryId)
+        {
+            var articles = _unitOfWork.Articles.GetAll().Where(x => x.CategoryId == categoryId).ToList();
+
+            if (articles.Count() == 0)
+            {
+                return NotFound($"No articles found for category ID {categoryId}.");
+            }
+
+            return Ok(articles);
+        }
     }
 }

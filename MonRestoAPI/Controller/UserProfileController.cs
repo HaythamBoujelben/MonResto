@@ -55,13 +55,6 @@ namespace MonResto.API.Controllers
         [HttpPost("Create")]
         public async Task<IActionResult> Create(UserProfileDto userProfileDto)
         {
-            // Check if a user with the same email already exists
-            var existingUser = await _unitOfWork.UserProfiles.FindAsync(x => x.Email == userProfileDto.Email);
-            if (existingUser != null)
-            {
-                return Conflict("A user profile with this email already exists.");
-            }
-
             // Map the DTO to the UserProfile entity
             var newUserProfile = _mapper.Map<UserProfile>(userProfileDto);
 

@@ -45,20 +45,52 @@ namespace MonResto.API.Controllers
         [HttpPost("Create")]
         public async Task<IActionResult> Create(OrderDto orderDto)
         {
-            // Check if the User exists
-            var userProfile = await _unitOfWork.UserProfiles.GetByIdAsync(orderDto.UserProfileId);
-            if (userProfile == null)
+            try
             {
-                return BadRequest("User Profile not found.");
+                // Validate the user profile
+                var userProfile = await _unitOfWork.UserProfiles.GetByIdAsync(orderDto.UserProfileId);
+                if (userProfile == null)
+                {
+                    return BadRequest("User Profile not found.");
+                }
+
+                // Map OrderDto to Order entity
+                var newOrder = new Order()
+                {
+                    OrderDate = orderDto.OrderDate,
+                    UserProfileId = orderDto.UserProfileId,
+                    TotalPrice = orderDto.TotalPrice,
+                };
+                var idOrder = await _unitOfWork.Orders.AddAndGetIdAsync(newOrder);
+                await _unitOfWork.SaveChangesAsync();
+
+                // Add OrderItems to the Order
+                foreach (var itemDto in orderDto.OrderItems)
+                {
+                    var orderItem = new OrderItem
+                    {
+                        OrderId = idOrder,
+                        ArticleId = itemDto.ArticleId,
+                        Quantity = itemDto.Quantity,
+                        Price = itemDto.Price
+                    };
+                    await _unitOfWork.OrderItems.AddAsync(orderItem);
+                }
+
+                await _unitOfWork.SaveChangesAsync();
+
+                return Ok(newOrder);
             }
+            catch (Exception ex)
+            {
+                // Log the exception (use a logging library like Serilog, NLog, or built-in logging)
+                Console.Error.WriteLine($"Error creating order: {ex.Message}");
 
-            var newOrder = _mapper.Map<Order>(orderDto);
-            await _unitOfWork.Orders.AddAsync(newOrder);
-            await _unitOfWork.SaveChangesAsync();
-
-
-            return Ok(newOrder);
+                // Return a meaningful error response
+                return StatusCode(500, "An error occurred while creating the order. Please try again later.");
+            }
         }
+
 
         // Update Order (e.g., change status)
         [HttpPut("Update/{Id}")]

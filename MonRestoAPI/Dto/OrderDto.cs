@@ -2,9 +2,9 @@
 {
     public class OrderDto
     {
-        public int UserProfileId { get; set; } 
+        public int UserProfileId { get; set; } // User who placed the order
         public DateTime OrderDate { get; set; }
-        public decimal TotalAmount { get; set; }
-        public string Status { get; set; } // E.g., "Pending", "Completed", "Cancelled"
+        public decimal TotalPrice { get; set; }
+        public List<OrderItemDto> OrderItems { get; set; }
     }
 }

@@ -20,6 +20,19 @@ namespace MonRestoAPI.Repositories
             await _context.AddAsync(entity);
         }
 
+        public async Task<int> AddAndGetIdAsync(T entity)
+        {
+            await _context.AddAsync(entity); // Add the entity to the context
+            await _context.SaveChangesAsync(); // Save changes to generate the ID
+            var idProperty = typeof(T).GetProperty("Id"); // Assuming the primary key is named "Id"
+            if (idProperty == null)
+            {
+                throw new InvalidOperationException($"The entity type {typeof(T).Name} does not have an 'Id' property.");
+            }
+            return (int)idProperty.GetValue(entity); // Return the generated ID
+        }
+
+
         public void Delete(T entity)
         {
             _context.Set<T>().Remove(entity);

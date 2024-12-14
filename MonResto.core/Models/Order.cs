@@ -7,6 +7,6 @@
         public decimal TotalPrice { get; set; }
         public int? UserProfileId { get; set; }
         public UserProfile UserProfile { get; set; }
-        
+
     }
 }
