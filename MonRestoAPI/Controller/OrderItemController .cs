@@ -21,14 +21,13 @@ public class OrderItemController : ControllerBase
     [HttpGet("GetByOrderId/{orderId}")]
     public async Task<IActionResult> GetOrderItemsByOrderId(int orderId)
     {
-        var orderItems = await _unitOfWork.OrderItems.FindAsync(x => x.OrderId == orderId);
+        var orderItems =  _unitOfWork.OrderItems.Include(x =>x.Order).Include(x => x.Article).Include(x => x.Article.Menu).Include(x => x.Order.UserProfile).Include(x => x.Article.Category).GetAll().Where(x => x.OrderId == orderId).ToList();
         if (orderItems == null)
         {
             return NotFound($"No items found for Order with ID {orderId}.");
         }
 
-        var orderItemDtos = _mapper.Map<List<OrderItemDto>>(orderItems);
-        return Ok(orderItemDtos);
+        return Ok(orderItems);
     }
 
     // Get OrderItem by ID
