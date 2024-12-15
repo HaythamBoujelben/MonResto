@@ -20,7 +20,6 @@ namespace MonRestoAPI.Controllers
             _mapper = mapper;
         }
 
-        // Get all articles
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -31,7 +30,6 @@ namespace MonRestoAPI.Controllers
             return Ok(articles); 
         }
 
-        // Get an article by its ID
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
@@ -43,7 +41,6 @@ namespace MonRestoAPI.Controllers
             return Ok(article); 
         }
 
-        // Get an article by name
         [HttpGet("GetByName")]
         public IActionResult GetByName(string name)
         {
@@ -55,31 +52,22 @@ namespace MonRestoAPI.Controllers
             return Ok(article);  
         }
 
-        // Create a new article
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] ArticleDto artDto)
         {
-            // Check if the article already exists
             var existingArticle = _unitOfWork.Articles.Find(x => x.Name.Equals(artDto.Name));
             if (existingArticle != null)
             {
                 return Conflict(new { Message = "An article with this name already exists." });
             }
 
-
-            // Map DTO to model
             var newArticle = _mapper.Map<Article>(artDto);
-
-            // Add and save changes
             await _unitOfWork.Articles.AddAsync(newArticle);
             await _unitOfWork.SaveChangesAsync();
-
-            // Return the created article
             return CreatedAtAction(nameof(Create), new { id = newArticle.Id }, newArticle);
         }
 
 
-        // Update article
         [HttpPut("Update/{id}")]
         public async Task<IActionResult> Update(int id, ArticleDto articleDto)
         {
@@ -88,16 +76,13 @@ namespace MonRestoAPI.Controllers
             {
                 return NotFound($"Article with ID {id} not found.");
             }
-
             _mapper.Map(articleDto, existingArticle);
-
             _unitOfWork.Articles.Update(existingArticle);
             await _unitOfWork.SaveChangesAsync();
 
             return Ok(existingArticle);
         }
 
-        // Delete an article
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {

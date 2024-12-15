@@ -19,7 +19,6 @@ namespace MonResto.API.Controllers
             _mapper = mapper;
         }
 
-        // Get All User Profiles
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -27,7 +26,6 @@ namespace MonResto.API.Controllers
             return Ok(userProfiles);
         }
 
-        // Get User Profile by ID
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
@@ -39,7 +37,6 @@ namespace MonResto.API.Controllers
             return Ok(userProfile);
         }
 
-        // Get User Profile by Email
         [HttpGet("GetByEmail")]
         public async Task<IActionResult> GetByEmailAsync(string email)
         {
@@ -51,21 +48,17 @@ namespace MonResto.API.Controllers
             return Ok(userProfile);
         }
 
-        // Create User Profile
         [HttpPost("Create")]
         public async Task<IActionResult> Create(UserProfileDto userProfileDto)
         {
-            // Map the DTO to the UserProfile entity
             var newUserProfile = _mapper.Map<UserProfile>(userProfileDto);
 
-            // Add to the repository and save changes
             await _unitOfWork.UserProfiles.AddAsync(newUserProfile);
             await _unitOfWork.SaveChangesAsync();
 
             return Ok(newUserProfile);
         }
 
-        // Update User Profile
         [HttpPut("Update/{id}")]
         public async Task<IActionResult> Update(int id, UserProfileDto userProfileDto)
         {
@@ -75,17 +68,13 @@ namespace MonResto.API.Controllers
                 return NotFound($"User Profile with ID {id} not found.");
             }
 
-            // Update fields (or map all fields, depending on your scenario)
             _mapper.Map(userProfileDto, existingUserProfile);
-
-            // Save changes
             _unitOfWork.UserProfiles.Update(existingUserProfile);
             await _unitOfWork.SaveChangesAsync();
 
             return Ok(existingUserProfile);
         }
 
-        // Delete User Profile
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -95,7 +84,6 @@ namespace MonResto.API.Controllers
                 return NotFound($"User Profile with ID {id} not found.");
             }
 
-            // Delete the user profile
             _unitOfWork.UserProfiles.Delete(userProfile);
             await _unitOfWork.SaveChangesAsync();
 

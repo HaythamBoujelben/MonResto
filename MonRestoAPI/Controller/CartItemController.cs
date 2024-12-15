@@ -19,7 +19,6 @@ namespace MonResto.API.Controllers
             _mapper = mapper;
         }
 
-        // Get all Cart Items for a specific Cart (using CartId)
         [HttpGet("GetByCart/{cartId}")]
         public async Task<IActionResult> GetByCartIdAsync(int cartId)
         {
@@ -32,7 +31,6 @@ namespace MonResto.API.Controllers
             return Ok(cartItemDtos);
         }
 
-        // Get Cart Item by CartId and ArticleId (foreign keys)
         [HttpGet("GetByArticleInCart")]
         public async Task<IActionResult> GetByArticleInCart(int cartId, int articleId)
         {
@@ -46,25 +44,19 @@ namespace MonResto.API.Controllers
             return Ok(cartItemDto);
         }
 
-        // Create new Cart Item (Linking to Cart and Article via foreign keys)
         [HttpPost("Create")]
         public async Task<IActionResult> Create(CartItemDto cartItemDto)
         {
-            // Check if Cart exists
             var cart = await _unitOfWork.Carts.GetByIdAsync(cartItemDto.CartId);
             if (cart == null)
             {
                 return BadRequest("Cart not found.");
             }
-
-            // Check if Article exists
             var article = await _unitOfWork.Articles.GetByIdAsync(cartItemDto.ArticleId);
             if (article == null)
             {
                 return BadRequest("Article not found.");
             }
-
-            // Map DTO to CartItem entity
             var newCartItem = _mapper.Map<CartItem>(cartItemDto);
             await _unitOfWork.CartItems.AddAsync(newCartItem);
             await _unitOfWork.SaveChangesAsync();
@@ -72,7 +64,6 @@ namespace MonResto.API.Controllers
             return CreatedAtAction(nameof(GetByCartIdAsync), new { cartId = newCartItem.CartId }, newCartItem);
         }
 
-        // Update CartItem (Modify quantity or other properties)
         [HttpPut("Update/{cartItemId}")]
         public async Task<IActionResult> Update(int cartItemId, CartItemDto cartItemDto)
         {
@@ -82,7 +73,6 @@ namespace MonResto.API.Controllers
                 return NotFound($"CartItem with ID {cartItemId} not found.");
             }
 
-            // Update fields (like Quantity)
             _mapper.Map(cartItemDto, existingCartItem);
 
             _unitOfWork.CartItems.Update(existingCartItem);
@@ -91,7 +81,6 @@ namespace MonResto.API.Controllers
             return Ok(existingCartItem);
         }
 
-        // Delete Cart Item
         [HttpDelete("Delete/{cartItemId}")]
         public async Task<IActionResult> Delete(int cartItemId)
         {

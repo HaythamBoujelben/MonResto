@@ -60,7 +60,7 @@ namespace MonRestoAPI.Repositories
             catch
             {
                 await RollbackAsync();
-                throw; // Re-throw the exception to handle it in the calling code
+                throw; 
             }
         }
 

@@ -19,7 +19,6 @@ namespace MonResto.API.Controllers
             _mapper = mapper;
         }
 
-        // Get all Categories
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -27,7 +26,6 @@ namespace MonResto.API.Controllers
             return Ok(categories);
         }
 
-        // Get Category by ID
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -39,7 +37,6 @@ namespace MonResto.API.Controllers
             return Ok(categorie);
         }
 
-        // Create a new Category
         [HttpPost("Create")]
         public async Task<IActionResult> Create(CategoryDto categoryDto)
         {
@@ -60,7 +57,6 @@ namespace MonResto.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = newCategory.Id }, newCategory);
         }
 
-        // Update a Category
         [HttpPut("Update/{id}")]
         public async Task<IActionResult> Update(int id, CategoryDto categoryDto)
         {
@@ -80,7 +76,6 @@ namespace MonResto.API.Controllers
             return Ok(existingCategory);
         }
 
-        // Delete a Category
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {

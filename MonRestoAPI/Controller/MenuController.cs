@@ -19,7 +19,6 @@ namespace MonResto.API.Controllers
             _mapper = mapper;
         }
 
-        // Get All Menus
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -27,7 +26,6 @@ namespace MonResto.API.Controllers
             return Ok(menus);
         }
 
-        // Get Menu by ID
         [HttpGet("GetById/{menuId}")]
         public async Task<IActionResult> GetByIdAsync(int menuId)
         {
@@ -39,18 +37,14 @@ namespace MonResto.API.Controllers
             return Ok(menu);
         }
 
-        // Create Menu
         [HttpPost("Create")]
         public async Task<IActionResult> Create(MenuDto menuDto)
         {
-            // Check if the menu name already exists
             var existingMenu = await _unitOfWork.Menus.FindAsync(x => x.Name == menuDto.Name);
             if (existingMenu != null)
             {
                 return Conflict("A menu with this name already exists.");
             }
-
-            // Map the MenuDto to the Menu entity
             var newMenu = _mapper.Map<Menu>(menuDto);
             await _unitOfWork.Menus.AddAsync(newMenu);
             await _unitOfWork.SaveChangesAsync();
@@ -59,7 +53,6 @@ namespace MonResto.API.Controllers
             return Ok(newMenu);
         }
 
-        // Update Menu
         [HttpPut("Update/{Id}")]
         public async Task<IActionResult> Update(int Id, MenuDto menuDto)
         {
@@ -69,7 +62,6 @@ namespace MonResto.API.Controllers
                 return NotFound($"Menu with ID {Id} not found.");
             }
 
-            // Map updated data from MenuDto to Menu entity
             _mapper.Map(menuDto, existingMenu);
             _unitOfWork.Menus.Update(existingMenu);
             await _unitOfWork.SaveChangesAsync();
@@ -77,7 +69,6 @@ namespace MonResto.API.Controllers
             return Ok(existingMenu);
         }
 
-        // Delete Menu
         [HttpDelete("Delete/{Id}")]
         public async Task<IActionResult> Delete(int Id)
         {
@@ -87,15 +78,12 @@ namespace MonResto.API.Controllers
                 return NotFound($"Menu with ID {Id} not found.");
             }
 
-            // Delete Articles from this Menu
             var articles = _unitOfWork.Articles.GetAll().Where(x => x.MenuId == Id);
             foreach (var article in articles)
             {
                 article.MenuId = null; 
                 _unitOfWork.Articles.Update(article);
             }
-
-            // Delete the Menu
             _unitOfWork.Menus.Delete(menu);
             await _unitOfWork.SaveChangesAsync();
 

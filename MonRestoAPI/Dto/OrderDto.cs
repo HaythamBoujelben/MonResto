@@ -2,7 +2,7 @@
 {
     public class OrderDto
     {
-        public int UserProfileId { get; set; } // User who placed the order
+        public int UserProfileId { get; set; } 
         public DateTime OrderDate { get; set; }
         public decimal TotalPrice { get; set; }
         public List<OrderItemDto> OrderItems { get; set; }

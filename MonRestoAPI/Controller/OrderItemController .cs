@@ -17,7 +17,6 @@ public class OrderItemController : ControllerBase
         _mapper = mapper;
     }
 
-    // Get All OrderItems by OrderId
     [HttpGet("GetByOrderId/{orderId}")]
     public async Task<IActionResult> GetOrderItemsByOrderId(int orderId)
     {
@@ -30,7 +29,6 @@ public class OrderItemController : ControllerBase
         return Ok(orderItems);
     }
 
-    // Get OrderItem by ID
     [HttpGet("{id}")]
     public async Task<IActionResult> GetOrderItemById(int id)
     {
@@ -44,7 +42,6 @@ public class OrderItemController : ControllerBase
         return Ok(orderItemDto);
     }
 
-    // Create OrderItem (usually called when an order is placed)
     [HttpPost]
     public async Task<IActionResult> CreateOrderItem(OrderItemDto orderItemDto)
     {
@@ -60,9 +57,8 @@ public class OrderItemController : ControllerBase
             return NotFound($"Article with ID {orderItemDto.ArticleId} not found.");
         }
 
-        // Create new OrderItem from DTO
         var newOrderItem = _mapper.Map<OrderItem>(orderItemDto);
-        newOrderItem.Price = article.Price * orderItemDto.Quantity; // Set price based on article price
+        newOrderItem.Price = article.Price * orderItemDto.Quantity; 
 
         await _unitOfWork.OrderItems.AddAsync(newOrderItem);
         await _unitOfWork.SaveChangesAsync();
@@ -70,7 +66,6 @@ public class OrderItemController : ControllerBase
         return CreatedAtAction(nameof(GetOrderItemById), new { id = newOrderItem.Id }, newOrderItem);
     }
 
-    // Update OrderItem (e.g., updating the quantity)
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateOrderItem(int id, OrderItemDto orderItemDto)
     {
@@ -80,9 +75,8 @@ public class OrderItemController : ControllerBase
             return NotFound($"OrderItem with ID {id} not found.");
         }
 
-        // Update OrderItem with new quantity
         orderItem.Quantity = orderItemDto.Quantity;
-        orderItem.Price = orderItemDto.Quantity * orderItem.Price; // Update the price based on new quantity
+        orderItem.Price = orderItemDto.Quantity * orderItem.Price; 
 
         _unitOfWork.OrderItems.Update(orderItem);
         await _unitOfWork.SaveChangesAsync();
@@ -90,7 +84,6 @@ public class OrderItemController : ControllerBase
         return Ok(orderItem);
     }
 
-    // Delete OrderItem
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteOrderItem(int id)
     {
@@ -100,7 +93,6 @@ public class OrderItemController : ControllerBase
             return NotFound($"OrderItem with ID {id} not found.");
         }
 
-        // Delete the OrderItem
         _unitOfWork.OrderItems.Delete(orderItem);
         await _unitOfWork.SaveChangesAsync();
 
